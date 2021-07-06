@@ -2,5 +2,7 @@
     <string name="app_name">BootcampColombia</string>
     <string name="hello_world">Hello world</string>
     <string name="change_title">Change title</string>
+    <string name="add_name">Add name…</string>
+    <string name="add">Add</string>
     <string name="update">Update</string>
 </resources>

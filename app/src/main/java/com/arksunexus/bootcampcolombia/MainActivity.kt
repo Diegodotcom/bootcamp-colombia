@@ -1,28 +1,32 @@
 package com.arksunexus.bootcampcolombia
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import com.arksunexus.bootcampcolombia.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var title: TextView
-    private lateinit var name: EditText
-    private lateinit var addBtn: Button
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var adapter: ListAdapter
+    private val names = mutableListOf("ArkusNexus", "Bootcamp", "Colombia", "Android")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        title = findViewById(R.id.title_text_view)
-        name = findViewById(R.id.name_edit_text)
-        addBtn = findViewById(R.id.add_button)
-
-        addBtn.setOnClickListener {
-            title.text = name.text
+        binding.addButton.setOnClickListener {
+            addNameToList()
         }
+    }
+
+    private fun addNameToList() {
+        val item = binding.nameEditText.text.toString()
+        names.add(item)
+        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, names)
+        binding.namesListView.adapter = adapter
     }
 }

@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.names.observe(this@MainActivity) { names ->
 //            adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, names)
-            binding.namesRecyclerView.adapter = adapter
+//            binding.namesRecyclerView.adapter = adapter
         }
 
         setupButton()

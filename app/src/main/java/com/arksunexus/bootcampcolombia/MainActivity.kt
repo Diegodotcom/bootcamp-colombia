@@ -1,11 +1,10 @@
 package com.arksunexus.bootcampcolombia
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
-import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.arksunexus.bootcampcolombia.databinding.ActivityMainBinding
 
@@ -13,19 +12,35 @@ import com.arksunexus.bootcampcolombia.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var adapter: BaseAdapter
+    private lateinit var adapter: MainAdapter
 
-    private val names = mutableListOf("ArkusNexus", "Bootcamp", "Colombia", "Android")
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         Log.d("BootcampColombia", "Lifecycle: onCreate")
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
-        setupListView()
+        mainViewModel.names.observe(this@MainActivity) { names ->
+//            adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, names)
+            binding.namesRecyclerView.adapter = adapter
+        }
+
         setupButton()
+    }
+
+    private fun setupButton() {
+        binding.addButton.setOnClickListener {
+            addNameToList()
+        }
+    }
+
+    private fun addNameToList() {
+        val item = binding.nameEditText.text.toString()
+        mainViewModel.addNameToList(item)
+        adapter.notifyDataSetChanged()
     }
 
     override fun onStart() {
@@ -51,22 +66,5 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Log.d("BootcampColombia", "Lifecycle: onDestroy")
-    }
-
-    private fun setupListView() {
-        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, names)
-        binding.namesListView.adapter = adapter
-    }
-
-    private fun setupButton() {
-        binding.addButton.setOnClickListener {
-            addNameToList()
-        }
-    }
-
-    private fun addNameToList() {
-        val item = binding.nameEditText.text.toString()
-        names.add(item)
-        adapter.notifyDataSetChanged()
     }
 }

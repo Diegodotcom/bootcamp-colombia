@@ -18,8 +18,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
-    <ListView
-        android:id="@+id/names_list_view"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/names_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="25dp"
@@ -28,6 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/name_edit_text"
+        tools:listitem="@layout/item_name_view"
         />
 
     <EditText
@@ -39,7 +40,7 @@
         android:hint="@string/add_name"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintTop_toBottomOf="@id/names_list_view"
+        app:layout_constraintTop_toBottomOf="@id/names_recycler_view"
         app:layout_constraintBottom_toTopOf="@id/add_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

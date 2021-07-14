@@ -1,11 +1,11 @@
-package com.arksunexus.bootcampcolombia
+package com.arksunexus.bootcampcolombia.ui
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.arksunexus.bootcampcolombia.databinding.ActivityMainBinding
 
 
@@ -23,12 +23,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mainViewModel.names.observe(this@MainActivity) { names ->
-//            adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, names)
-//            binding.namesRecyclerView.adapter = adapter
+        mainViewModel.names.observe(this@MainActivity) { countries ->
+            adapter.submitList(countries)
         }
 
+        setupRecyclerView()
         setupButton()
+    }
+
+    private fun setupRecyclerView() {
+        adapter = MainAdapter()
+        binding.namesRecyclerView.adapter = adapter
+        binding.namesRecyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     }
 
     private fun setupButton() {
